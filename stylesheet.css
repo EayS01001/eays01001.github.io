@@ -6,7 +6,7 @@ body {
     font-family: "Helvetica Neue",Helvetica,Arial,"ヒラギノ角ゴシック","Hiragino Sans","ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","メイリオ",Meiryo,"ＭＳ Ｐゴシック","MS PGothic",sans-serif;
     line-height: 1.8;
     margin: 0 auto;
-    max-width: 1060px;
+    max-width: 1020px;
 }
 
 a {
@@ -47,18 +47,40 @@ header h1 a:visited {
     color: #333
 }
 
+#center-container {
+    display: flex;
+    justify-content: space-between
+}
+
 main{
-    width: 720px;
+    width: 1020px;
     overflow: hidden;
-    max-width: 720px;
+    max-width: 1020px;
     background-color: #fff;
     padding: 16px 20px;
 }
+
+article h1 {
+    font-size: 1.6em;
+    font-weight: bold;
+    border-bottom: solid 4px #333;
+    margin: .5em 0
+}
+
 
 article h2{
     font: size 1.4em;
     font-weight: bold;
     border-bottom: solid 2px #333;
+}
+
+article :not(pre) > code {
+    font-size: .9em;
+    margin: 0 2px;
+    padding: 0 5px;
+    border: 1px solid #e0e0e0;
+    background-color: #fafafa;
+    border-radius: 3px;
 }
 
 ::marker {
@@ -68,4 +90,107 @@ article h2{
 
 .self-introduction a{
     border-bottom: none;
+}
+
+div.kill_img img{
+    margin: 5px 5px 0 0;
+}
+
+
+
+@media (max-width:1020px) {
+    nav {
+        display: none
+    }
+
+    .ad-side-res {
+        display: none
+    }
+
+    .ad-side-sticky-res {
+        display: none
+    }
+
+    body {
+        width: 720px;
+        margin: 0 auto
+    }
+}
+
+@media (max-width:740px) {
+    body {
+        font-size: 15px;
+        width: auto;
+        background-color: #fff
+    }
+
+    main {
+        width: auto;
+        padding: 8px 10px
+    }
+
+    header {
+        margin-left: 10px;
+        padding-left: 0
+    }
+
+    header h1 {
+        font-size: 48px
+    }
+
+    footer {
+        margin-right: 10px;
+        margin-left: 10px
+    }
+
+    article h1 {
+        font-size: 1.3em
+    }
+
+    article h2 {
+        font-size: 1.2em
+    }
+
+    article h3 {
+        font-size: 1.1em
+    }
+
+    article .highlight pre {
+        font-size: 13px
+    }
+
+    .ad_PC {
+        display: none
+    }
+
+    .ad_mobile {
+        display: inline-block;
+        width: 336px;
+        height: 280px
+    }
+}
+
+@media (max-width:650px) {
+    .affiliate-2 {
+        display: none
+    }
+}
+
+@media (max-width:320px) {
+    body {
+        font-size: 14px
+    }
+
+    header h1 {
+        font-size: 40px
+    }
+
+    .ad_mobile {
+        width: 300px;
+        height: 250px
+    }
+
+    article .highlight pre {
+        font-size: 12px
+    }
 }
