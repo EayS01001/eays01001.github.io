@@ -3,10 +3,18 @@ body {
     color: #333;
     font-size: 16px;
     font-weight: normal;
-    font-family: "Helvetica Neue",Helvetica,Arial,"ヒラギノ角ゴシック","Hiragino Sans","ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","メイリオ",Meiryo,"ＭＳ Ｐゴシック","MS PGothic",sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, "ヒラギノ角ゴシック", "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
     line-height: 1.8;
     margin: 0 auto;
     max-width: 1020px;
+}
+
+main {
+    width: auto;
+    overflow: hidden;
+    max-width: 1020px;
+    background-color: #fff;
+    padding: 16px 20px;
 }
 
 a {
@@ -14,11 +22,11 @@ a {
     text-decoration: none;
     border-bottom: solid 1px;
     padding-bottom: 1px
-} 
+}
 
 a:visited {
     color: #333
-} 
+}
 
 a:hover {
     color: #333;
@@ -47,18 +55,21 @@ header h1 a:visited {
     color: #333
 }
 
+
+footer {
+    margin: 3em 0 0 0;
+    padding: 2em 0;
+    border-top: 1px dashed #333;
+    text-align: center;
+    font-size: 90%;
+    line-height: 2.4;
+}
+
 #center-container {
     display: flex;
     justify-content: space-between
 }
 
-main{
-    width: 1020px;
-    overflow: hidden;
-    max-width: 1020px;
-    background-color: #fff;
-    padding: 16px 20px;
-}
 
 article h1 {
     font-size: 1.6em;
@@ -68,13 +79,13 @@ article h1 {
 }
 
 
-article h2{
+article h2 {
     font: size 1.4em;
     font-weight: bold;
     border-bottom: solid 2px #333;
 }
 
-article :not(pre) > code {
+article :not(pre)>code {
     font-size: .9em;
     margin: 0 2px;
     padding: 0 5px;
@@ -88,32 +99,51 @@ article :not(pre) > code {
     font-size: 1.2em;
 }
 
-.self-introduction a{
+.self-introduction a {
     border-bottom: none;
 }
 
-div.kill_img img{
+div.kill_img img {
     margin: 5px 5px 0 0;
+    width: 100%;
+    height: auto;
 }
 
+table,
+th,
+td {
+    border: 1px solid;
+}
+table {
+    width: 60%;
+    height: 240px;
+    overflow-x: auto;
+    border-spacing: 0;
+}
+th,
+td {
+    padding: 5px 10px;
+    border-top-width: 0;
+    border-left-width: 0;
+}
 
+th:last-child,
+td:last-child {
+    border-right-width: 0;
+}
 
-@media (max-width:1020px) {
-    nav {
-        display: none
-    }
+tr:last-child td {
+    border-bottom-width: 0;
+}
 
-    .ad-side-res {
-        display: none
-    }
-
-    .ad-side-sticky-res {
-        display: none
-    }
-
+@media (max-width: 1020px) and (min-width: 768px) {
     body {
         width: 720px;
         margin: 0 auto
+    }
+    main {
+        width: auto;
+        padding: 8px 10px
     }
 }
 
@@ -122,75 +152,5 @@ div.kill_img img{
         font-size: 15px;
         width: auto;
         background-color: #fff
-    }
-
-    main {
-        width: auto;
-        padding: 8px 10px
-    }
-
-    header {
-        margin-left: 10px;
-        padding-left: 0
-    }
-
-    header h1 {
-        font-size: 48px
-    }
-
-    footer {
-        margin-right: 10px;
-        margin-left: 10px
-    }
-
-    article h1 {
-        font-size: 1.3em
-    }
-
-    article h2 {
-        font-size: 1.2em
-    }
-
-    article h3 {
-        font-size: 1.1em
-    }
-
-    article .highlight pre {
-        font-size: 13px
-    }
-
-    .ad_PC {
-        display: none
-    }
-
-    .ad_mobile {
-        display: inline-block;
-        width: 336px;
-        height: 280px
-    }
-}
-
-@media (max-width:650px) {
-    .affiliate-2 {
-        display: none
-    }
-}
-
-@media (max-width:320px) {
-    body {
-        font-size: 14px
-    }
-
-    header h1 {
-        font-size: 40px
-    }
-
-    .ad_mobile {
-        width: 300px;
-        height: 250px
-    }
-
-    article .highlight pre {
-        font-size: 12px
     }
 }
