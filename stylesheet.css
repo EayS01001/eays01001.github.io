@@ -85,20 +85,12 @@ article h2 {
     border-bottom: solid 2px #333;
 }
 
-article :not(pre)>code {
-    font-size: .9em;
-    margin: 0 2px;
-    padding: 0 5px;
-    border: 1px solid #e0e0e0;
-    background-color: #fafafa;
-    border-radius: 3px;
-}
-
 ::marker {
     color: black;
     font-size: 1.2em;
 }
 
+/* アンダーバー消し */
 .self-introduction a {
     border-bottom: none;
 }
@@ -139,18 +131,13 @@ tr:last-child td {
 @media (max-width: 1020px) and (min-width: 768px) {
     body {
         width: 95%;
-        margin: 0 auto
+        margin: 0 auto;        
+        font-size: 15px;
+        background-color: #fff
+
     }
     main {
         width: auto;
         padding: 8px 10px
-    }
-}
-
-@media (max-width:740px) {
-    body {
-        font-size: 15px;
-        width: auto;
-        background-color: #fff
     }
 }
