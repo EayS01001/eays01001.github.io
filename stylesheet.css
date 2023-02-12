@@ -170,7 +170,7 @@ tr:last-child td {
     body {
         width: 95%;
         margin: 0 auto;        
-        font-size: 15px;
+        font-size: 30px;
         background-color: #fff
 
     }
@@ -182,5 +182,3 @@ tr:last-child td {
         padding-left: 8px
     }
 }
-
- 
