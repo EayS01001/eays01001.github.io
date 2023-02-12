@@ -89,7 +89,7 @@ article h2 {
     color: black;
     font-size: 1.2em;
 }
-
+/* コード表示部分 */
 article :not(pre) > code {
     font-size: .9em;
     margin: 0 2px;
@@ -97,6 +97,35 @@ article :not(pre) > code {
     border: 1px solid #e0e0e0;
     background-color: #fafafa;
     border-radius: 3px;
+}
+
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+ol#breadcrumb {
+    color: #666;
+    list-style-type: none;
+    overflow: hidden;
+    margin: 0;
+    font-size: 95%;
+    padding-left: 0;
+}
+
+ol#breadcrumb>li+li:before {
+    content: ">";
+    padding: 0 6px;
+    color: #ccc;
+}
+
+ol#breadcrumb>li {
+    display: inline-block;
 }
 
 /* アンダーバー消し */
