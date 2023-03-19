@@ -93,7 +93,8 @@ article h2 {
 article :not(pre) > code {
     font-size: .9em;
     margin: 0 2px;
-    padding: 0 5px;
+    padding: 1.5px 5px;
+    color: #ccb800;
     border: 1px solid #e0e0e0;
     background-color: #fafafa;
     border-radius: 3px;
@@ -166,6 +167,34 @@ tr:last-child td {
     border-bottom-width: 0;
 }
 
+h2{
+    text-align: center;
+    margin-bottom: 30px;
+  }
+#page_top{
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    opacity: 0.6;
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+  #page_top a{
+    width: 60px;
+    height: 60px;
+    text-decoration: none;
+    border-bottom: 0px;
+  }
+  #page_top a::before{
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: '\f139';
+    font-size: 50px;
+    color: #000000;
+  }
+
 @media (max-width: 1020px) and (min-width: 768px) {
     body {
         width: 95%;
@@ -181,4 +210,21 @@ tr:last-child td {
     header{
         padding-left: 8px
     }
+
+
+    #page_top{
+        width: 100px;
+        height: 100px;
+        margin-bottom: 45px;
+        margin-right: 10px;
+      }
+      #page_top a{
+        width: 100px;
+        height: 100px;
+        text-decoration: none;
+        border-bottom: 0px;
+      }
+      #page_top a::before{
+        font-size: 100px;
+      }
 }
