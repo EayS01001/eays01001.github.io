@@ -94,7 +94,7 @@ article :not(pre) > code {
     font-size: .9em;
     margin: 0 2px;
     padding: 1.5px 5px;
-    color: #ccb800;
+    color: #333;
     border: 1px solid #e0e0e0;
     background-color: #fafafa;
     border-radius: 3px;
@@ -134,7 +134,7 @@ ol#breadcrumb>li {
     border-bottom: none;
 }
 
-div.kill_img img {
+div.custom_img img {
     margin: 5px 5px 0 0;
     width: 100%;
     height: auto;

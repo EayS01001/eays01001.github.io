@@ -81,20 +81,20 @@
                     <p>私は、後半から進捗管理を担当し、Trelloを使用してタスクの進捗状況を管理していました。タスクごとに期限を設定し、毎週金曜日に進捗を確認していました。また、忙しい期間には頻繁に進捗を確認し、必要に応じて調整を行っていました。<br><br>
                         私が行った進捗管理は、プロジェクトのスケジュールの管理に役立ちました。また、チームメンバーとのコミュニケーションを改善し、プロジェクトの品質を向上させることができました。
                     </p>
-                    <div class="kill_img">
+                    <div class="custom_img">
                         <img src="./KillTheBeat/Trello.PNG" alt="">
                     </div>
                     <h2>GameManager部分</h2>
                     <p>GameManagerでは、主にデータの保持を担当しています。<br>
                         ポーズ処理を追加したいと考えた時、新たにスクリプトを用意するのも手間がかかると思い、GameManager内に実装することにしました。
                     </p>
-                    <div class="kill_img">
+                    <div class="custom_img">
                         <img src="./KillTheBeat/GameManager.PNG" alt="">
                         <img src="./KillTheBeat/GameManager_Pause.PNG" alt="">
                     </div>
                     <p>リザルトで使うデータなどを初期化する処理も、ミュージックセレクト画面に移行したら初期化するようになっています。<br
                         >ここではUnirxを使用し<code>.Subscribe()</code>でイベントを登録しています。</p>
-                    <div class="kill_img">
+                    <div class="custom_img">
                         <img src="./KillTheBeat/GameManager2.PNG" alt="">
                     </div>
 
@@ -103,7 +103,7 @@
                         ゲーム中はタイミングを変更できないように設定されています。<br>
                         左の文字は、曲のイメージカラーに合わせて色が変わります、値はGameManagerから取得できます。
                     </p>
-                    <div class="kill_img">
+                    <div class="custom_img">
                         <img src="./KillTheBeat/InGame_Option.png" alt="">
                         <img src="./KillTheBeat/InGame_Option_Baned.png" alt="">
                     </div>
@@ -111,7 +111,7 @@
                         パラメータの変数はすべてUnirxの<code>ReactiveProperty()</code>で定義し、変更がかかった場合イベント発行するようになっています。<br>
                         ここでは変更されたら、サウンド関係にイベント発行しています。
                     </p>
-                    <div class="kill_img">
+                    <div class="custom_img">
                         <img src="./KillTheBeat/Option.PNG" alt="">
                         <img src="./KillTheBeat/Option2.PNG" alt="">
                     </div>
@@ -120,7 +120,7 @@
                         また、アウトラインの部分は、元の画像にオーバーレイすることで実現されています。<br>
                         コードの数値の部分は、ResultManagerクラスで変更されています。<br>
                     </p>
-                    <div class="kill_img">
+                    <div class="custom_img">
                         <img src="./KillTheBeat/result.png" alt="">
                         <img src="./KillTheBeat/Rank_Shader.png" alt="">
                         <img src="./KillTheBeat/RankShaderOutline.png" alt="">
@@ -130,7 +130,7 @@
                         この機能は、Inspector上で非常に使いやすく、必要なときにだけ必要な項目を表示することができるので、開発者の生産性を向上させることができます。また、この機能は、設定項目の数が多い場合にも非常に便利で、開発者が混乱することを避けることができます。<br><br>
                         今後は、この機能をさらに改善して、Inspector上でより便利な機能を実装していく予定です。これにより、開発者がより簡単かつ迅速に必要な設定を行うことができ、より使いやすいツールを提供することができます。
                     </p>
-                    <div class="kill_img">
+                    <div class="custom_img">
                         <img src="./KillTheBeat/InspectorEX.PNG" alt="">
                         <img src="./KillTheBeat/InspectorEX2.PNG" alt="">
                     </div>
@@ -140,7 +140,7 @@
                         しかし、現在がフェイド中かどうかは不明であり、外部からvoid関数を呼び出しているため、コルーチンで待つことができないという問題があります。この点は今後改善していく予定です。<br><br>
                         私が実装したこの機能は、あまり使用されていないが、クラスに機能を追加できたことは大きな成功だと考えています。今後は、この機能を改良して、より使いやすく、便利な機能にしていくことを目指しています。
                     </p>
-                    <div class="kill_img">
+                    <div class="custom_img">
                         <img src="./KillTheBeat/ExClass.PNG" alt="">
                     </div>
                 </div>
