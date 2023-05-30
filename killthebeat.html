@@ -2,26 +2,28 @@
 <link rel="stylesheet" href="stylesheet.css">
 
 <html lang="jp">
-    <head>
-        <meta charset="utf-8">
-        <title>Kill Shot The Beat | Morita Syota</title>
-    </head>
-    <body>
-        <header>
-            <h1>
-                <a href=".\index.html" id="header-title">Portfolio</a>
-            </h1>
-        </header>
-        <main>
-            <ol id="breadcrumb">
-                <li><a href="./index.html">Top</a></li>
-                <li><a href="./killthebeat.html">Kill Shot The Beat</a></li>
-            </ol>
-            <article>
-                <h1>Kill Shot The Beat</h1>
-                <div id="content">
-                    <div class="self-introduction"></div>
-                    <!-- <h2>自己紹介</h2>
+
+<head>
+    <meta charset="utf-8">
+    <title>Kill Shot The Beat | Morita Syota</title>
+</head>
+
+<body>
+    <header>
+        <h1>
+            <a href=".\index.html" id="header-title">Portfolio</a>
+        </h1>
+    </header>
+    <main>
+        <ol id="breadcrumb">
+            <li><a href="./index.html">Top</a></li>
+            <li><a href="./killthebeat.html">Kill Shot The Beat</a></li>
+        </ol>
+        <article>
+            <h1>Kill Shot The Beat</h1>
+            <div id="content">
+                <div class="self-introduction"></div>
+                <!-- <h2>自己紹介</h2>
                     <div class="self-introduction">
                         <ul>
                             <li>
@@ -73,89 +75,92 @@
                                 </tbody>
                             </table>
                         </ul> -->
-                    <h2>はじめに</h2>
-                    <p>今回のプロジェクトでは、テックリーダーとして活動しました。<br>
-                        具体的には、チームメンバーのプログラムに関するアドバイスや修正を行うことが主な役割でした。<br>
-                        また、システムの設計に携わり、後半にはタスク管理の責任も担うようになりました。</p>
-                    <h2>管理部分</h2>
-                    <p>私は、後半から進捗管理を担当し、Trelloを使用してタスクの進捗状況を管理していました。タスクごとに期限を設定し、毎週金曜日に進捗を確認していました。また、忙しい期間には頻繁に進捗を確認し、必要に応じて調整を行っていました。<br><br>
-                        私が行った進捗管理は、プロジェクトのスケジュールの管理に役立ちました。また、チームメンバーとのコミュニケーションを改善し、プロジェクトの品質を向上させることができました。
-                    </p>
-                    <div class="custom_img">
-                        <img src="./KillTheBeat/Trello.PNG" alt="">
-                    </div>
-                    <h2>GameManager部分</h2>
-                    <p>GameManagerでは、主にデータの保持を担当しています。<br>
-                        ポーズ処理を追加したいと考えた時、新たにスクリプトを用意するのも手間がかかると思い、GameManager内に実装することにしました。
-                    </p>
-                    <div class="custom_img">
-                        <img src="./KillTheBeat/GameManager.PNG" alt="">
-                        <img src="./KillTheBeat/GameManager_Pause.PNG" alt="">
-                    </div>
-                    <p>リザルトで使うデータなどを初期化する処理も、ミュージックセレクト画面に移行したら初期化するようになっています。<br
-                        >ここではUnirxを使用し<code>.Subscribe()</code>でイベントを登録しています。</p>
-                    <div class="custom_img">
-                        <img src="./KillTheBeat/GameManager2.PNG" alt="">
-                    </div>
-
-                    <h2>Option画面</h2>
-                    <p>Option画面では、各パラメータを調整できるように、Sliderで実装しました。<br>
-                        ゲーム中はタイミングを変更できないように設定されています。<br>
-                        左の文字は、曲のイメージカラーに合わせて色が変わります、値はGameManagerから取得できます。
-                    </p>
-                    <div class="custom_img">
-                        <img src="./KillTheBeat/InGame_Option.png" alt="">
-                        <img src="./KillTheBeat/InGame_Option_Baned.png" alt="">
-                    </div>
-                    <p>
-                        パラメータの変数はすべてUnirxの<code>ReactiveProperty()</code>で定義し、変更がかかった場合イベント発行するようになっています。<br>
-                        ここでは変更されたら、サウンド関係にイベント発行しています。
-                    </p>
-                    <div class="custom_img">
-                        <img src="./KillTheBeat/Option.PNG" alt="">
-                        <img src="./KillTheBeat/Option2.PNG" alt="">
-                    </div>
-                    <h2>リザルトシーン</h2>
-                    <p>このデザインは、Shader Graphを使用して実装され、2つのグラデーションを使用して中央部分を回転させることができます。<br>
-                        また、アウトラインの部分は、元の画像にオーバーレイすることで実現されています。<br>
-                        コードの数値の部分は、ResultManagerクラスで変更されています。<br>
-                    </p>
-                    <div class="custom_img">
-                        <img src="./KillTheBeat/result.png" alt="">
-                        <img src="./KillTheBeat/Rank_Shader.png" alt="">
-                        <img src="./KillTheBeat/RankShaderOutline.png" alt="">
-                    </div>
-                    <h2>インスペクタ拡張</h2>
-                    <p>個人的に、今回実装したかった機能は、スイッチをON/OFFすることで不要な設定を非表示にしたり、表示したりすることができる機能です。この機能により、必要のない項目を設定しなくてもよくなり、不必要なエラーを回避することができます。<br><br>
-                        この機能は、Inspector上で非常に使いやすく、必要なときにだけ必要な項目を表示することができるので、開発者の生産性を向上させることができます。また、この機能は、設定項目の数が多い場合にも非常に便利で、開発者が混乱することを避けることができます。<br><br>
-                        今後は、この機能をさらに改善して、Inspector上でより便利な機能を実装していく予定です。これにより、開発者がより簡単かつ迅速に必要な設定を行うことができ、より使いやすいツールを提供することができます。
-                    </p>
-                    <div class="custom_img">
-                        <img src="./KillTheBeat/InspectorEX.PNG" alt="">
-                        <img src="./KillTheBeat/InspectorEX2.PNG" alt="">
-                    </div>
-                    <h2>クラス拡張</h2>
-                    <p>
-                        私は、Imageクラスを拡張して、フェイド機能を自作で実装しました。この機能は、Imageクラスに独自の機能を追加することができ、非常に便利です。フェイド機能は、画像を徐々に表示・非表示にすることができる機能であり、より高度な画像処理が可能になります。<br><br>
-                        しかし、現在がフェイド中かどうかは不明であり、外部からvoid関数を呼び出しているため、コルーチンで待つことができないという問題があります。この点は今後改善していく予定です。<br><br>
-                        私が実装したこの機能は、あまり使用されていないが、クラスに機能を追加できたことは大きな成功だと考えています。今後は、この機能を改良して、より使いやすく、便利な機能にしていくことを目指しています。
-                    </p>
-                    <div class="custom_img">
-                        <img src="./KillTheBeat/ExClass.PNG" alt="">
-                    </div>
+                <h2>プレイ動画</h2>
+                <video src="KillTheBeat/KillShotTheBeatプレイ動画.mp4" controls width="100%" muted autoplay playsinline></video>
+                <h2>はじめに</h2>
+                <p>今回のプロジェクトでは、テックリーダーとして活動しました。<br>
+                    具体的には、チームメンバーのプログラムに関するアドバイスや修正を行うことが主な役割でした。<br>
+                    また、システムの設計に携わり、後半にはタスク管理の責任も担うようになりました。</p>
+                <h2>管理部分</h2>
+                <p>私は、後半から進捗管理を担当し、Trelloを使用してタスクの進捗状況を管理していました。タスクごとに期限を設定し、毎週金曜日に進捗を確認していました。また、忙しい期間には頻繁に進捗を確認し、必要に応じて調整を行っていました。<br><br>
+                    私が行った進捗管理は、プロジェクトのスケジュールの管理に役立ちました。また、チームメンバーとのコミュニケーションを改善し、プロジェクトの品質を向上させることができました。
+                </p>
+                <div class="custom_img">
+                    <img src="./KillTheBeat/Trello.PNG" alt="">
                 </div>
-            </article>
-            <!-- ライブラリ読み込み -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            <!-- jsファイル読み込み -->
-            <script src="jsfile.js"></script>
-            <!-- ライブラリ読み込み -->
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.4/css/all.css">
-            <!-- Topに戻るボタン -->
-            <div id="page_top"><a href="#"></a></div>
-            <footer>
-                <p>Create By Morita Syota</p>
-            </footer>
-        </main>
-    </body>
+                <h2>GameManager部分</h2>
+                <p>GameManagerでは、主にデータの保持を担当しています。<br>
+                    ポーズ処理を追加したいと考えた時、新たにスクリプトを用意するのも手間がかかると思い、GameManager内に実装することにしました。
+                </p>
+                <div class="custom_img">
+                    <img src="./KillTheBeat/GameManager.PNG" alt="">
+                    <img src="./KillTheBeat/GameManager_Pause.PNG" alt="">
+                </div>
+                <p>リザルトで使うデータなどを初期化する処理も、ミュージックセレクト画面に移行したら初期化するようになっています。<br>ここではUnirxを使用し<code>.Subscribe()</code>でイベントを登録しています。
+                </p>
+                <div class="custom_img">
+                    <img src="./KillTheBeat/GameManager2.PNG" alt="">
+                </div>
+
+                <h2>Option画面</h2>
+                <p>Option画面では、各パラメータを調整できるように、Sliderで実装しました。<br>
+                    ゲーム中はタイミングを変更できないように設定されています。<br>
+                    左の文字は、曲のイメージカラーに合わせて色が変わります、値はGameManagerから取得できます。
+                </p>
+                <div class="custom_img">
+                    <img src="./KillTheBeat/InGame_Option.png" alt="">
+                    <img src="./KillTheBeat/InGame_Option_Baned.png" alt="">
+                </div>
+                <p>
+                    パラメータの変数はすべてUnirxの<code>ReactiveProperty()</code>で定義し、変更がかかった場合イベント発行するようになっています。<br>
+                    ここでは変更されたら、サウンド関係にイベント発行しています。
+                </p>
+                <div class="custom_img">
+                    <img src="./KillTheBeat/Option.PNG" alt="">
+                    <img src="./KillTheBeat/Option2.PNG" alt="">
+                </div>
+                <h2>リザルトシーン</h2>
+                <p>このデザインは、Shader Graphを使用して実装され、2つのグラデーションを使用して中央部分を回転させることができます。<br>
+                    また、アウトラインの部分は、元の画像にオーバーレイすることで実現されています。<br>
+                    コードの数値の部分は、ResultManagerクラスで変更されています。<br>
+                </p>
+                <div class="custom_img">
+                    <img src="./KillTheBeat/result.png" alt="">
+                    <img src="./KillTheBeat/Rank_Shader.png" alt="">
+                    <img src="./KillTheBeat/RankShaderOutline.png" alt="">
+                </div>
+                <h2>インスペクタ拡張</h2>
+                <p>個人的に、今回実装したかった機能は、スイッチをON/OFFすることで不要な設定を非表示にしたり、表示したりすることができる機能です。この機能により、必要のない項目を設定しなくてもよくなり、不必要なエラーを回避することができます。<br><br>
+                    この機能は、Inspector上で非常に使いやすく、必要なときにだけ必要な項目を表示することができるので、開発者の生産性を向上させることができます。また、この機能は、設定項目の数が多い場合にも非常に便利で、開発者が混乱することを避けることができます。<br><br>
+                    今後は、この機能をさらに改善して、Inspector上でより便利な機能を実装していく予定です。これにより、開発者がより簡単かつ迅速に必要な設定を行うことができ、より使いやすいツールを提供することができます。
+                </p>
+                <div class="custom_img">
+                    <img src="./KillTheBeat/InspectorEX.PNG" alt="">
+                    <img src="./KillTheBeat/InspectorEX2.PNG" alt="">
+                </div>
+                <h2>クラス拡張</h2>
+                <p>
+                    私は、Imageクラスを拡張して、フェイド機能を自作で実装しました。この機能は、Imageクラスに独自の機能を追加することができ、非常に便利です。フェイド機能は、画像を徐々に表示・非表示にすることができる機能であり、より高度な画像処理が可能になります。<br><br>
+                    しかし、現在がフェイド中かどうかは不明であり、外部からvoid関数を呼び出しているため、コルーチンで待つことができないという問題があります。この点は今後改善していく予定です。<br><br>
+                    私が実装したこの機能は、あまり使用されていないが、クラスに機能を追加できたことは大きな成功だと考えています。今後は、この機能を改良して、より使いやすく、便利な機能にしていくことを目指しています。
+                </p>
+                <div class="custom_img">
+                    <img src="./KillTheBeat/ExClass.PNG" alt="">
+                </div>
+            </div>
+        </article>
+        <!-- ライブラリ読み込み -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- jsファイル読み込み -->
+        <script src="jsfile.js"></script>
+        <!-- ライブラリ読み込み -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.4/css/all.css">
+        <!-- Topに戻るボタン -->
+        <div id="page_top"><a href="#"></a></div>
+        <footer>
+            <p>Create By Morita Syota</p>
+        </footer>
+    </main>
+</body>
+
 </html>
