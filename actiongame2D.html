@@ -2,29 +2,159 @@
 <link rel="stylesheet" href="stylesheet.css">
 
 <html lang="jp">
-    <head>
-        <meta charset="utf-8">
-        <title>自作2Dアクションゲーム</title>
-    </head>
-    <body>
-        <header>
-            <h1>
-                <a href=".\index.html" id="header-title">Portfolio</a>
-            </h1>
-        </header> 
-        <main>
-            <ol id="breadcrumb">
-                <li><a href="./index.html">Top</a></li>
-                <li><a href="./actiongame2D.html">自作2Dアクションゲーム</a></li>
-            </ol>
-            <article>
-                <h2>プレイ動画</h2>
-                <iframe width="100%" height="535.5" src="https://www.youtube.com/embed/LImyQGc9sr4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                <h2>更新中</h2>
-                <p>
-                    更新中...
+
+<head>
+    <meta charset="utf-8">
+    <title>自作2Dアクションゲーム</title>
+</head>
+<body>
+    <header>
+        <h1>
+            <a href=".\index.html" id="header-title">Portfolio</a>
+        </h1>
+    </header>
+    <main>
+        <ol id="breadcrumb">
+            <li><a href="./index.html">Top</a></li>
+            <li><a href="./actiongame2D.html">2Dアクションゲーム</a></li>
+        </ol>
+        <article>
+            <h2>はじめに</h2>
+                <p class="bold_text">このゲームは新しい技術を磨くために作られているため、ゲームとして完成するつもりはないです</p>
+                <p style="margin-bottom: 0%;">このプロジェクトでやりたいこと</p>
+                <ul style="margin-top: 0%;">
+                    <li>キャラクターにアウトラインをつける</li>
+                    <li>Addressableについて理解深める</li>
+                    <li>URPを使用し、光について理解深める、プレイヤーキャラクターを光らせる</li>
+                    <li>非同期処理について理解深める、UniTaskの勉強</li>
+                </ul>
+            <h2>Player Model</h2>
+                <p>工夫した点<br>
+                    どうしてもInspector上でパラメータ変更をしたいので、<code>ScriptableObject</code>を使用することにより実現できました。
                 </p>
-            </article>
-        </main>
-    </body>
+                <p>反省点<br>
+                    全部Publicで定義しているため安全性が低い、もう少し細かく定義すべきと思っています。
+                </p>
+                <p class="bold_text">UnitCommonModelはEnemyとPlayerなどのベースクラスとして設計しています</p>
+                <div class="custom_img">
+                    <img src="./2DActionGame/UnitCommonModel.PNG" alt="">
+                    <img src="./2DActionGame/PlayerModel.PNG" alt="">
+                </div>
+            <h2>Player View</h2>
+                <p>
+                    ここではアニメションの管理をしています。<br>
+                    遷移指示はPlayerControllerから出ているため特に目立った点はありません。
+                </p>
+                <div class="custom_img">
+                    <img src="./2DActionGame/PlayerView1.PNG" alt="">
+                    <img src="./2DActionGame/PlayerView2.PNG" alt="">
+                </div>
+            <h2>PlayerController</h2>
+                <h3>ロード</h3>
+                    <p>Addressableを使用し、モデルデータをロードしています。<br>
+                        工夫した点<br>
+                        ・LoadAssetsAysncでは<code>Getcomponent()</code>のような処理にしたかったのですが、技術的な制約により達成できませんでした。<br>
+                        ・ハンドルで使っていたメモリをしっかり開放することに心掛けています。<br>
+                    </p>
+                    <div class="custom_img">
+                        <img src="./2DActionGame/PlayerController_Start_Load.PNG" alt="">
+                        <img src="./2DActionGame/PlayerController_Load_MemoryRelease.PNG" alt="">
+                        <img src="./2DActionGame/Load_Failure.PNG" alt="">
+                    </div>
+                <h3>プレイヤー入力</h3>
+                    <p>工夫した点<br>
+                        ・現在のPlayer状態に応じで入力を受け付けいます。<br>
+                        ・状態はビットフラグで定義していて、複数状態を保持しています。そのため簡単に状態取得できるようになっています。<br>
+                    </p>
+                    <div class="custom_img">
+                        <img src="./2DActionGame/PlayerController_Input_Horizontal.PNG" alt="">
+                        <img src="./2DActionGame/PlayerController_Input_Horizontal.PNG" alt="">
+                        <img src="./2DActionGame/PlayerController_Input_Jump.PNG" alt="">
+                    </div>
+                <h3>移動とジャンプ処理</h3>
+                    <p>
+                        工夫した点<br>
+                        ・移動では、最初Positionをそのまま書き換えていますが、壁をすり抜けることによりVelocityを調整することで移動するようにしました。
+                    </p>
+                    <img src="./2DActionGame/PlayerController_Move&Jump.PNG" alt="" class="custom_img">
+                <h3>攻撃処理</h3>
+                    <p>
+                        ここでは円型の判定を生成し、入ったPlayerタグのオブジェクトすべてに対してダメージを与えてます。<br>
+                        工夫した点<br>
+                        ・判定発生までの時間をもたらしています。<br>
+                        反省点<br>
+                        ・アニメーションに合わせて手動で判定発生タイミングを変更しないといけないため、手間がかかる。
+                        今後もし変更するのであれば、Animatorの中でEventを発行するようにしてみたいと思っています。<br>
+                    </p>
+                    <img src="./2DActionGame/PlayerController_Attack.PNG" alt="" class="custom_img">
+                <h3>ダメージを受ける処理</h3>
+                    <p>ダメージを受け、硬直までのロジックとなっています</p>
+                    <img src="./2DActionGame/PlayerController_TakeDamage.PNG" alt="" class="custom_img">
+                <h3>攻撃範囲-Gizmo</h3>
+                    <p>攻撃範囲を可視化させ、攻撃範囲を調整する時をもっと簡単にできるようにしました。</p>
+                    <div class="custom_img">
+                        <img src="./2DActionGame/Player_Gizmo.PNG" alt="">
+                        <img src="./2DActionGame/Player_Gizmo_Code.PNG" alt="">
+                    </div>
+            <h2>Enemy Model</h2>
+                <p>UnitCommonModelを継承し、Enemyクラス特有な変数を新たに定義しています。</p>
+                <p>工夫した点<br>
+                    命名がすごくややこしいのでTootipを使ってInspectorでもコードエディターでもすぐわかるようにしています。
+                </p>
+                <div class="custom_img">
+                    <img src="./2DActionGame/EnemyModel.PNG" alt="">
+                    <img src="./2DActionGame/EnemyModel_Tootip.png" alt="">
+                    <img src="./2DActionGame/EnemyModel_Tootip2.png" alt="">
+                </div>
+            <h2>Enemy メインロジック</h2>
+                <h3>AI</h3>
+                    <img src="./2DActionGame/EnemyController_MainLogic.PNG" alt="" class="custom_img">
+                    <video controls width="100%">
+                        <source src="./2DActionGame/Enemy.mp4" type="video/mp4">
+                    </video>
+                <h3>移動先取得</h3>
+                    <p>許容値を設定し、(現在の座標 - 移動目標座標)の絶対値 &lt; 許容値 であれば次の移動目標を設定するようにしています。<br>
+                       この許容値がないと、移動目標の近くでクルクル回ります。値が完全一致になることが少ないですから(小数点以下何桁分まで一致しないといけないので)。
+                    </p>
+                    <img src="./2DActionGame/EnemyController_SelectTarget.PNG" alt="" class="custom_img">
+                <h3>攻撃処理</h3>
+                    <p>工夫した点<br>
+                        ・攻撃を中断をするため、コルーチンを変数に入れ、いつでも中断できるようにしました。<br>
+                        反省点<br>
+                        ・UniTaskのCanceltokenを使用したほうが良いと思っています。現状問題ないのでそのまま使用しています。<br>
+                        ・中断時にフラグ解除まで処理が届かないため、その部分の考慮が必要。<br>
+                    </p>
+                    <img src="./2DActionGame/EnemyController_Col.PNG" alt="" class="custom_img">
+                    <img src="./2DActionGame/EnemyController_Attack.PNG" alt="" class="custom_img">
+                <h3>攻撃中断</h3>
+                    <p>攻撃されたら現在進行中の攻撃処理を止めます。</p>
+                    <img src="./2DActionGame/EnemyController_AttackCancel.PNG" alt="" class="custom_img">
+                    <video controls width="100%"><source src="./2DActionGame/EnemyAttackCancel.mp4" type="video/mp4"></video>
+            <h2>Enemy View</h2>
+                <p>中身はほぼPlayerと変わらないのですが、ここでは死ぬときのアニメーションロジックを載せます。</p>
+                <img src="./2DActionGame/EnemyView_DieAnim.PNG" alt="" class="custom_img">
+                <video controls width="100%">
+                    <source src="./2DActionGame/EnemyDieAnim.mp4" type="video/mp4">
+                </video>
+            <h2>アウトラインシェーダーグラフ</h2>
+            <div class="custom_img">
+                <img src="./2DActionGame/OutLineShaderGraph.PNG" alt="">
+                <img src="./2DActionGame/OutLineShaderGraph_Param.PNG" alt="">
+                <img src="./2DActionGame/OutLineShaderGraph_SceneView.PNG" alt="">
+            </div>
+        </article>
+        <!-- ライブラリ読み込み -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- jsファイル読み込み -->
+        <script src="jsfile.js"></script>
+        <!-- ライブラリ読み込み -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.4/css/all.css">
+        <!-- Topに戻るボタン -->
+        <div id="page_top"><a href="#"></a></div>
+        <footer>
+            <p>Create By Morita Syota</p>
+        </footer>
+    </main>
+</body>
+
 </html>
