@@ -277,7 +277,3 @@ h2 {
         font-size: 100px;
     }
 }
-
-.prettyprint ol.linenums > li {
-	list-style-type: decimal; 
-}
