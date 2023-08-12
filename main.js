@@ -5,7 +5,7 @@ $(function() {
         <a>名前：盛田 翔太</a>
     </li>
     <li>
-        <a>e-mail：</a><a href="mailto:983055238@qq.com" style="border-bottom: solid 1px;">983055238@qq.com</a>
+        <a>e-mail：</a><a href="mailto:g983055238@gmail.com" style="border-bottom: solid 1px;">g983055238@gmail.com</a>
     </li>
     <li>
         <a>特技：中国語話せる(ネイティブレベル)</a>
