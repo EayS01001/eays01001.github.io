@@ -10,9 +10,10 @@
 
 <body>
     <header>
-        <h1>
-            <a href=".\index.html" id="header-title">Portfolio</a>
-        </h1>
+        <link rel="stylesheet" href="./vs2015.min.css" />
+        <script src="./highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        <h1><a href=".\index.html" id="header-title">Portfolio</a></h1>
     </header>
     <main>
         <ol id="breadcrumb">
@@ -23,58 +24,6 @@
             <h1>Kill Shot The Beat</h1>
             <div id="content">
                 <div class="self-introduction"></div>
-                <!-- <h2>自己紹介</h2>
-                    <div class="self-introduction">
-                        <ul>
-                            <li>
-                                <a>名前：盛田 翔太</a>
-                            </li>
-                            <li>
-                                <a>e-mail：</a><a href="mailto:983055238@qq.com" style="border-bottom: solid 1px;">983055238@qq.com</a>
-                            </li>
-                            <li>
-                                <a>特技：中国語話せる(ネイティブレベル)</a>
-                            </li>
-                            <li>
-                                <a>2024年度卒業予定</a>
-                            </li>
-                            <li>
-                                <a>PG関係資格：MOS Excel 2019</a>
-                            </li>
-                            <li>
-                                <a>スキル</a>
-                            </li>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>使用言語</th>
-                                        <th>熟練度</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Unity</td>
-                                        <td>★★★★★</td>
-                                    </tr>
-                                    <tr>
-                                        <td>C#</td>
-                                        <td>★★★☆☆</td>
-                                    </tr>
-                                    <tr>
-                                        <td>C++</td>
-                                        <td>★☆☆☆☆</td>
-                                    </tr>
-                                    <tr>
-                                        <td>UE4</td>
-                                        <td>★★☆☆☆</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Python</td>
-                                        <td>★★☆☆☆</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </ul> -->
                 <h2>プレイ動画</h2>
                 <iframe width="100%" height="535.5" src="https://www.youtube.com/embed/V2kvVptl7rw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 <!-- <video src="KillTheBeat/KillShotTheBeatプレイ動画.mp4" controls width="100%" muted autoplay playsinline></video> -->
@@ -83,7 +32,7 @@
                     プレイ人数：1人<br>
                     プラットフォーム：PC<br>
                     使用言語：Unity - C#<br>
-                    開発環境：2021.2.5f1<br>
+                    開発環境：2021.2.15f1<br>
                     開発人数：9人(リーダー(プランナー)１人・プログラマーリーダー1人・プログラマー5人・デザイナー2人)<br>
                     開発期間：22年10月～23年1月<br>
                     音ゲー×FPSゲームという新しジャンルのゲームを作ってみたくて挑戦しました。 このゲームの面白いところはリズムに乗って銃を撃ち、敵を倒した時の爽快感や敵を敵を倒していくとエフェクトやSEが派手なっていくところです。</p>
@@ -98,15 +47,163 @@
                 <p>GameManagerでは、主にデータの保持を担当しています。<br>
                     ポーズ処理を追加したいと考えた時、新たにスクリプトを用意するのも手間がかかると思い、GameManager内に実装することにしました。
                 </p>
-                <div class="custom_img">
-                    <img src="./KillTheBeat/GameManager.PNG" alt="">
-                    <img src="./KillTheBeat/GameManager_Pause.PNG" alt="">
-                </div>
-                <p>リザルトで使うデータなどを初期化する処理も、ミュージックセレクト画面に移行したら初期化するようになっています。<br>ここではUnirxを使用し<code>.Subscribe()</code>でイベントを登録しています。
-                </p>
-                <div class="custom_img">
-                    <img src="./KillTheBeat/GameManager2.PNG" alt="">
-                </div>
+                <p>リザルトで使うデータなどを初期化する処理も、ミュージックセレクト画面に移行したら初期化するようになっています。<br>ここではUnirxを使用し<code>.Subscribe()</code>でイベントを登録しています。</p>
+                <pre class="code C#"><code>
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UniRx;
+using UnityEngine;
+using UnityEngine.Events;
+
+public class GameManager : MonoBehaviour
+{
+    [SerializeField]
+    private List<TitleSelect> canPauseScene = new List<TitleSelect>();
+
+    public static GameManager instance { private set; get; }
+
+    public bool IsPause { get; private set; } = false;
+
+    public int Score = 0;
+
+    public int KillEnemy { get; private set; } = 0;
+
+    public int MaxCombo { get; private set; } = 0;
+
+    public int Nice { get; private set; } = 0;
+
+    public int Miss { get; private set; } = 0;
+
+    public SongData Song;
+
+    private void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    private void Start()
+    {
+        //Musicセレクトシーンに移行したら、リザルトのステータス全部リセット
+        //LoadSceneManager.instance.CurrentScene.Where(i => i == TitleSelect.Music_Select).Subscribe(x => ResetResult()).AddTo(this);
+    }
+    private void Update()
+    {
+        //Pause
+        if (Input.GetKeyDown(KeyCode.Escape)&&IsNowSceneCanPause())
+        {
+            Pause();
+        }
+
+        //Debug用
+        if (Input.GetKey(KeyCode.LeftShift)&&IsPause==false)
+        {
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                ViewCursor(true);
+                LoadSceneManager.instance.LoadScene_FadeOutToIn(TitleSelect.Title);
+            }
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                ViewCursor(true);
+                LoadSceneManager.instance.LoadScene_FadeOutToIn(TitleSelect.Result);
+            }
+        }
+    }
+
+    public void ChengeSongData(SongData data)
+    {
+        Song = data;
+    }
+
+    public void ResetResult()
+    {
+        Score = 0;
+        KillEnemy = 0;
+        MaxCombo = 0;
+        Nice = 0;
+        Miss = 0;
+    }
+    public void Pause()
+    {
+        StartCoroutine(_Pause());
+    }
+    public IEnumerator _Pause()
+    {
+        if(IsPause == true)
+        {
+            //再生
+            IsPause = false;
+            Time.timeScale = 1;
+            yield return null;
+            OptionManager.instance.ClauseMenu();
+            PlayMusic_Player.instance.Set_BGM_Volume();
+            PlayMusic_Player.instance.Resume_PlayMusic_Player();
+            ViewCursor(false);
+            yield return null;
+        }
+        else
+        {
+            //ポーズ
+            IsPause = true;
+            Time.timeScale = 0;
+            yield return null;
+            PlayMusic_Player.instance.Pause_PlayMusic_Player();
+            OptionManager.instance.OpenMenu();
+            ViewCursor(true);
+            yield return null;
+        }
+    }
+
+    public void AddKillEnemyValue()
+    {
+        KillEnemy++;
+    }
+    public void SetMaxCombo(int value)
+    {
+        MaxCombo = value;
+    }
+    public void SetNiceAndMiss(JudgeTypeCount value)
+    {
+        Nice = value.niceCount;
+        Miss = value.missCount;
+    }
+    /// <summary>
+    /// マウスカーソルの表示を切り替える関数
+    /// </summary>
+    /// <param name="true:非表示 false:表示"></param>
+    public void ViewCursor(bool cursorLock) //小林制作
+    {
+        if (cursorLock == true)
+        {
+            Cursor.lockState = CursorLockMode.None; //マウスカーソルを表示にする
+        }
+        else if (cursorLock == false)
+        {
+            Cursor.lockState = CursorLockMode.Locked; //マウスカーソルを非表示する
+        }
+    }
+
+    private bool IsNowSceneCanPause()
+    {
+        foreach(var sceneTitle in canPauseScene)
+        {
+            if(sceneTitle.ToString() == LoadSceneManager.instance.GetSceneName())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+                </code></pre>
 
                 <h2>Option画面</h2>
                 <p>Option画面では、各パラメータを調整できるように、Sliderで実装しました。<br>
@@ -121,10 +218,167 @@
                     パラメータの変数はすべてUnirxの<code>ReactiveProperty()</code>で定義し、変更がかかった場合イベント発行するようになっています。<br>
                     ここでは変更されたら、サウンド関係にイベント発行しています。
                 </p>
-                <div class="custom_img">
-                    <img src="./KillTheBeat/Option.PNG" alt="">
-                    <img src="./KillTheBeat/Option2.PNG" alt="">
-                </div>
+                <pre class="code C#"><code>
+using System.Collections;
+using System.Collections.Generic;
+using UniRx;
+using UnityEngine;
+
+public class OptionManager : MonoBehaviour
+{
+    public static OptionManager instance { private set; get; } = null;
+
+    public bool IsOpen { get; private set; }
+
+    [SerializeField]
+    private GameObject MenuOBJ;
+
+    private ReactiveProperty<float> op_BGM = new ReactiveProperty<float>();
+    public ReadOnlyReactiveProperty<float> OP_BGM => op_BGM.ToReadOnlyReactiveProperty();
+
+
+    private ReactiveProperty<float> op_SE = new ReactiveProperty<float>();
+    public ReadOnlyReactiveProperty<float> OP_SE => op_SE.ToReadOnlyReactiveProperty();
+
+
+
+    private ReactiveProperty<float> op_NotesSpeed = new ReactiveProperty<float>();
+    public ReadOnlyReactiveProperty<float> OP_NotesSpeed => op_NotesSpeed.ToReadOnlyReactiveProperty();
+
+
+
+    private ReactiveProperty<float> op_Timing = new ReactiveProperty<float>();
+    public ReadOnlyReactiveProperty<float> OP_Timing => op_Timing.ToReadOnlyReactiveProperty();
+
+
+    private ReactiveProperty<float> op_Mouse = new ReactiveProperty<float>();
+    public ReadOnlyReactiveProperty<float> OP_Mouse => op_Mouse.ToReadOnlyReactiveProperty();
+
+    public Color SliderBackGroundDisableColor;
+    public Color SliderFillDisableColor;
+    public Color SliderHandleDisableColor;
+    public Color SliderValueTextDisableColor;
+    public Color SliderBackGroundEnableColor;
+    public Color SliderFillEnableColor;
+    public Color SliderHandleEnableColor;
+    public Color SliderValueTextEnableColor;
+
+
+    private int[] _defaultOptionValue = new int[5] { 50, 50, 5, 0, 0 };
+
+
+
+    private void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+        }
+        else
+        {
+            OptionManager.instance.Load();
+            Destroy(this);
+        }
+    }
+    private void Start()
+    {
+        Load();
+
+        //OP_BGM.Subscribe(x => SelectScenePreview.instance.Set_BGM_Volume());
+    }
+    public void Save()
+    {
+        PlayerPrefs.SetFloat("OP_BGM", op_BGM.Value);
+        PlayerPrefs.SetFloat("OP_SE", op_SE.Value);
+        PlayerPrefs.SetFloat("OP_NotesSpeed", op_NotesSpeed.Value);
+        PlayerPrefs.SetFloat("OP_Timing", op_Timing.Value);
+        PlayerPrefs.SetFloat("OP_Mouse", op_Mouse.Value);
+        PlayerPrefs.Save();
+    }
+
+
+    private void Load()
+    {
+        op_BGM.Value = PlayerPrefs.GetFloat("OP_BGM", op_BGM.Value);
+        op_SE.Value = PlayerPrefs.GetFloat("OP_SE", op_SE.Value);
+        op_NotesSpeed.Value = PlayerPrefs.GetFloat("OP_NotesSpeed", op_NotesSpeed.Value);
+        op_Timing.Value = PlayerPrefs.GetFloat("OP_Timing", op_Timing.Value);
+        op_Mouse.Value = PlayerPrefs.GetFloat("OP_Mouse", op_Mouse.Value);
+    }
+
+    public void LoadDefaultValue()
+    {
+        op_BGM.Value = _defaultOptionValue[0];
+        op_SE.Value = _defaultOptionValue[1];
+        op_NotesSpeed.Value = _defaultOptionValue[2];
+        op_Timing.Value = _defaultOptionValue[3];
+        op_Mouse.Value = _defaultOptionValue[4];
+    }
+
+    private void OnEnable()
+    {
+        Load();
+    }
+
+    private void OnDisable()
+    {
+        Save();
+    }
+
+    private void OnDestroy()
+    {
+        Save();
+    }
+
+    public void SetOptionValue(SliderManager slider)
+    {
+        switch (slider.optionType)
+        {
+            case OptionType.BGM:
+                op_BGM.Value = slider.GetSliderValue();
+                break;
+            case OptionType.SE:
+                op_SE.Value = slider.GetSliderValue();
+                break;
+            case OptionType.Notes:
+                op_NotesSpeed.Value = slider.GetSliderValue();
+                break;
+            case OptionType.Timing:
+                op_Timing.Value = slider.GetSliderValue();
+                break;
+            case OptionType.Mouse:
+                op_Mouse.Value = slider.GetSliderValue();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void OpenMenu()
+    {
+        IsOpen = true;
+        MenuOBJ.SetActive(true);
+    }
+    public void ClauseMenu()
+    {
+        IsOpen = false;
+        MenuOBJ.SetActive(false);
+    }
+
+
+    public void OnBackButtonClick()
+    {
+        StartCoroutine(_OnBackButtonClick());
+    }
+
+    private IEnumerator _OnBackButtonClick()
+    {
+        yield return GameManager.instance._Pause();
+        GameManager.instance.ViewCursor(true);
+        LoadSceneManager.instance.LoadScene_FadeOutToIn(TitleSelect.Music_Select);
+    }
+}
+                </code></pre>
                 <h2>リザルトシーン</h2>
                 <p>このデザインは、Shader Graphを使用して実装され、2つのグラデーションを使用して中央部分を回転させることができます。<br>
                     また、アウトラインの部分は、元の画像にオーバーレイすることで実現されています。<br>
@@ -137,11 +391,42 @@
                 </div>
                 <h2>インスペクタ拡張</h2>
                 <p>個人的に、今回実装したかった機能は、スイッチをON/OFFすることで不要な設定を非表示にしたり、表示したりすることができる機能です。この機能により、必要のない項目を設定しなくてもよくなり、不必要なエラーを回避することができます。<br><br>
-                    この機能は、Inspector上で非常に使いやすく、必要なときにだけ必要な項目を表示することができるので、開発者の生産性を向上させることができます。また、この機能は、設定項目の数が多い場合にも非常に便利で、開発者が混乱することを避けることができます。<br><br>
-                    今後は、この機能をさらに改善して、Inspector上でより便利な機能を実装していく予定です。これにより、開発者がより簡単かつ迅速に必要な設定を行うことができ、より使いやすいツールを提供することができます。
+                    この機能は、Inspector上で非常に使いやすく、必要なときにだけ必要な項目を表示することができるので、開発者が混乱することを避けることができます。<br><br>
+                    今後は、このような機能をさらに改善して、Inspector上でより便利な機能を実装していく予定です。
                 </p>
+                <pre class="code C#"><code>
+using UnityEngine;
+using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+
+
+[CustomEditor(typeof(SliderManager))]
+public class CI_SliderManager : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        EditorGUI.BeginDisabledGroup(true);
+        EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour((MonoBehaviour)target), typeof(MonoScript), false);
+        EditorGUI.EndDisabledGroup();
+        var slider = target as SliderManager;
+        slider.isInGameDisable = EditorGUILayout.Toggle("isInGameDisable", slider.isInGameDisable);
+        slider.optionType = (OptionType)EditorGUILayout.EnumPopup("optionType", slider.optionType);
+        serializedObject.FindProperty("multiplyValue").floatValue = EditorGUILayout.FloatField("multiplyValue", serializedObject.FindProperty("multiplyValue").floatValue);
+
+        if (slider.isInGameDisable)
+        {
+            slider.SliderBackGround = (Image)EditorGUILayout.ObjectField("SliderBackGround", slider.SliderBackGround, typeof(Image), true);
+            slider.SliderFill = (Image)EditorGUILayout.ObjectField("SliderFill", slider.SliderFill, typeof(Image), true);
+            //SliderValueTextList の表示部分
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("SliderValueTextList")); //paramsでOptionを書くことも可能
+        }
+        serializedObject.ApplyModifiedProperties();
+    }
+}
+#endif
+                </code></pre>
                 <div class="custom_img">
-                    <img src="./KillTheBeat/InspectorEX.PNG" alt="">
                     <img src="./KillTheBeat/InspectorEX2.PNG" alt="">
                 </div>
                 <h2>クラス拡張</h2>
@@ -150,9 +435,342 @@
                     しかし、現在がフェイド中かどうかは不明であり、外部からvoid関数を呼び出しているため、コルーチンで待つことができないという問題があります。この点は今後改善していく予定です。<br><br>
                     私が実装したこの機能は、あまり使用されていないが、クラスに機能を追加できたことは大きな成功だと考えています。今後は、この機能を改良して、より使いやすく、便利な機能にしていくことを目指しています。
                 </p>
-                <div class="custom_img">
-                    <img src="./KillTheBeat/ExClass.PNG" alt="">
-                </div>
+                <pre class="code C#"><code>
+using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+
+public static class MoritaExpansionClass
+{
+    private static MonoBehaviour StaticMono = GameManager.instance as MonoBehaviour;
+
+    public static bool IsFade { get; private set; } = false;
+
+
+    #region ImageFade
+    private static IEnumerator FadeOut(Image image, float time, float endValue)
+    {
+        if (time > 0)
+        {
+            while (image.color.a != endValue)
+            {
+                var c = image.color;
+                var alpha = image.color.a;
+                alpha -= Time.deltaTime / time;
+                image.color = new Color(c.r, c.g, c.b, alpha);
+                yield return null;
+            }
+            IsFade = false;
+        }
+        else
+        {
+            Debug.LogError("FadeOutではtimeを0以上の値にしてください");
+            var c = image.color;
+            c.a = endValue;
+            image.color = c;
+            yield return null;
+        }
+
+    }
+    private static IEnumerator FadeOut(Image image, float time, float endValue, UnityAction action)
+    {
+        if (time > 0)
+        {
+            while (image.color.a != endValue)
+            {
+                var c = image.color;
+                var alpha = image.color.a;
+                alpha -= Time.deltaTime / time;
+                image.color = new Color(c.r, c.g, c.b, alpha);
+                yield return null;
+            }
+            IsFade = false;
+            action.Invoke();
+        }
+        else
+        {
+            Debug.LogError("FadeOutではtimeを0以上の値にしてください");
+            var c = image.color;
+            c.a = endValue;
+            image.color = c;
+            yield return null;
+            action.Invoke();
+        }
+
+    }
+    private static IEnumerator FadeIn(Image image, float time, float endValue)
+    {
+        if (time > 0)
+        {
+            var c = image.color;
+            c.a = 0;
+            while (image.color.a <= endValue)
+            {
+                c.a += Time.deltaTime / time;
+                image.color = c;
+                yield return null;
+            }
+            IsFade = false;
+        }
+        else
+        {
+            Debug.LogError("FadeInではtimeを0以上の値にしてください");
+            var c = image.color;
+            c.a = endValue;
+            image.color = c;
+            yield return null;
+        }
+    }
+    private static IEnumerator FadeIn(Image image, float time, float endValue, UnityAction action)
+    {
+        if (time > 0)
+        {
+            var c = image.color;
+            c.a = 0;
+            while (image.color.a != endValue)
+            {
+                c.a += Time.deltaTime / time;
+                if (c.a > endValue)
+                {
+                    c.a = endValue;
+                }
+                image.color = c;
+                yield return null;
+            }
+            IsFade = false;
+            action.Invoke();
+        }
+        else
+        {
+            Debug.LogError("FadeInではtimeを0以上の値にしてください");
+            var c = image.color;
+            c.a = endValue;
+            image.color = c;
+            yield return null;
+        }
+        
+    }
+    #endregion ImageFade
+
+
+
+    #region CanvasGroupFade
+    private static IEnumerator CanvasGroupFadeOut(CanvasGroup canvasGroup, float time, float endValue)
+    {
+        while (canvasGroup.alpha != endValue)
+        {
+            var a = canvasGroup.alpha;
+            a -= Time.deltaTime / time;
+            if (a <= 0)
+            {
+                a = 0;
+                canvasGroup.alpha = a;
+                break;
+            }
+            canvasGroup.alpha = a;
+            yield return null;
+        }
+    }
+
+    private static IEnumerator CanvasGroupFadeIn(CanvasGroup canvasGroup, float time, float endValue)
+    {
+        canvasGroup.alpha = 0;
+        while (canvasGroup.alpha <= endValue)
+        {
+            var a = canvasGroup.alpha;
+            a += Time.deltaTime / time;
+            if (a >= endValue)
+            {
+                a = endValue;
+                canvasGroup.alpha = a;
+                break;
+            }
+            canvasGroup.alpha = a;
+            yield return null;
+        }
+    }
+    #endregion CanvasGroupFade
+
+
+
+    /// <summary>
+    /// 指定したアルファ値になるまでフェイドインします
+    /// アルファ値は0~1で指定してください
+    /// </summary>
+    /// <param name="time">フェイドする時間</param>
+    /// <param name="endValue">アルファ値</param>
+    public static T MS_FadeIn<T>(this T t, float time, float endValue) where T : Image
+    {
+        IsFade = true;
+        if (t == null)
+        {
+            return t;
+        }
+        StaticMono.StartCoroutine(FadeIn(t, time, endValue));
+        return t;
+    }
+    public static T MS_FadeIn<T>(this T t, float time, float endValue, UnityAction action) where T : Image
+    {
+        Debug.Log("MSFadein");
+        IsFade = true;
+        if (t == null)
+        {
+            return t;
+        }
+        StaticMono.StartCoroutine(FadeIn(t, time, endValue, action));
+        return t;
+    }
+    /// <summary>
+    /// 指定したアルファ値になるまでフェイドアウトします
+    /// アルファ値は0~1で指定してください
+    /// </summary>
+    /// <param name="time">フェイドする時間</param>
+    /// <param name="endValue">アルファ値</param>
+    public static T MS_FadeOut<T>(this T t, float time, float endValue) where T : Image
+    {
+        IsFade = true;
+        if (t == null)
+        {
+            return t;
+        }
+        StaticMono.StartCoroutine(FadeOut(t, time, endValue));
+        return t;
+    }
+    public static T MS_FadeOut<T>(this T t, float time, float endValue, UnityAction action) where T : Image
+    {
+        IsFade = true;
+        if (t == null)
+        {
+            return t;
+        }
+        StaticMono.StartCoroutine(FadeOut(t, time, endValue, action));
+        return t;
+    }
+
+
+
+
+    /// <summary>
+    /// 指定したアルファ値になるまでフェイドインします
+    /// アルファ値は0~1で指定してください
+    /// </summary>
+    /// <param name="time">フェイドする時間</param>
+    /// <param name="endValue">アルファ値</param>
+    public static CanvasGroup MS_FadeIn(this CanvasGroup c, float time, float endValue)
+    {
+        if (c == null)
+        {
+            return c;
+        }
+        StaticMono.StartCoroutine(CanvasGroupFadeIn(c, time, endValue));
+        return c;
+    }
+
+
+
+    /// <summary>
+    /// 指定したアルファ値になるまでフェイドアウトします
+    /// アルファ値は0~1で指定してください
+    /// </summary>
+    /// <param name="time">フェイドする時間</param>
+    /// <param name="endValue">アルファ値</param>
+    public static CanvasGroup MS_FadeOut(this CanvasGroup c, float time, float endValue)
+    {
+        if (c == null)
+        {
+            return c;
+        }
+        StaticMono.StartCoroutine(CanvasGroupFadeOut(c, time, endValue));
+        return c;
+    }
+}
+                </code></pre>
+                <h2>デカ文字！</h2>
+                <p>名前の通り、めっちゃデカい文字です</p>
+                <pre class="code C#"><code>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
+
+public class FontIndexView : MonoBehaviour
+{
+    [SerializeField]
+    private List<Image> Fontlist;
+
+    [SerializeField]
+    private float fadeTime = 0.3f;
+
+    [SerializeField]
+    private Ease ease = Ease.InCubic;
+
+    private const int FIRST_LIST_NUM = 0;
+
+    private int cullent_count = 0;
+    private int maxlistcount;
+
+    private bool IsFirstPlay = false;
+
+    [SerializeField]
+    private float delaytime = 0.05f;
+
+    private Color imageColor;
+    void Awake()
+    {
+        //現在の曲のイメージカラー取得
+        imageColor = GameManager.instance.Song.Imagecolor;
+
+        cullent_count = 0;
+
+        maxlistcount = Fontlist.Count;
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(randomfont());
+    }
+
+    private IEnumerator randomfont()
+    {
+        //画像のalpha値を0にする
+        foreach (var i in Fontlist)
+        {
+            var j = i.color;
+            j.a = 0;
+            i.color = j;
+        }
+        cullent_count = 0;
+
+        var list = new List<Image>(Fontlist);
+
+        while(cullent_count < maxlistcount)
+        {
+            int random = Random.Range(0, list.Count);
+            if (IsFirstPlay == false)
+            {
+                list[FIRST_LIST_NUM].color = imageColor;
+                //Fade処理
+                list[FIRST_LIST_NUM].DOFade(1.0f, fadeTime).SetEase(ease);
+                IsFirstPlay = true;
+                //配列から削除
+                list.RemoveAt(FIRST_LIST_NUM);
+            }
+            else
+            {
+                list[random].color = imageColor;
+                //Fade処理
+                list[random].DOFade(1.0f, fadeTime).SetEase(Ease.InCubic);
+                list.RemoveAt(random);
+            }
+            yield return new WaitForSecondsRealtime(delaytime);
+            cullent_count++;
+        }
+    }
+}
+                </code></pre>
             </div>
         </article>
         <!-- ライブラリ読み込み -->

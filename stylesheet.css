@@ -241,6 +241,25 @@ h2 {
     color: #000000;
 }
 
+pre{
+    width: 100%;
+    height: 500px;
+  }
+  /*ソースコード用*/
+.code{ 
+position:relative;
+margin-left: 0px;
+padding:20px 20px 20px 20px;
+width: auto;
+background:#2F3437;
+list-style:none;
+color: #fff;
+font-size:1em;
+overflow: auto;
+white-space: pre-wrap;  /*折り返し*/
+-webkit-overflow-scrolling: touch;
+}
+
 @media (max-width: 1020px) and (min-width: 768px) {
     body {
         width: 95%;
